@@ -1,6 +1,6 @@
 # notes_on_scope_and_closures
 
-Chapter 1
+Chapter 1 - What is Scope
 
 Code typically undergoes three steps before it is executed. These three steps are called compilation and involve:
 
@@ -108,5 +108,38 @@ Engine: Cool. Passing the value of a, which is 2, into log(..).
 ...
 
 ////////////////////////////////////////////
+
+If a variable cannot be found in the immediate scope, Engine consults the next outer containing scope, continuing until found or until the outermost (aka, global) scope has been reached.
+
+The simple rules for traversing nested Scope: Engine starts at the currently executing Scope, looks for the variable there, then if not found, keeps going up one level, and so on. If the outermost global scope is reached, the search stops, whether it finds the variable or not.
+
+In conversation form again:
+
+So, revisiting the conversations between Engine and Scope, we'd overhear:
+
+Engine: "Hey, Scope of foo, ever heard of b? Got an RHS reference for it."
+
+Scope: "Nope, never heard of it. Go fish."
+
+Engine: "Hey, Scope outside of foo, oh you're the global Scope, ok cool. Ever heard of b? Got an RHS reference for it."
+
+Scope: "Yep, sure have. Here ya go."
+
+////////////////////////////////////////////
+
+LHS and RHS behave different when no reference can be found at any level of scope.
+
+If an RHS look-up fails to ever find a variable, anywhere in the nested Scopes, this results in a ReferenceError being thrown by the Engine. It's important to note that the error is of the type ReferenceError.
+
+By contrast, if the Engine is performing an LHS look-up and arrives at the top floor (global Scope) without finding it, and if the program is not running in "Strict Mode" [^note-strictmode], then the global Scope will create a new variable of that name in the global scope, and hand it back to Engine.
+
+"No, there wasn't one before, but I was helpful and created one for you."
+
+"Strict Mode" [^note-strictmode], which was added in ES5, has a number of different behaviors from normal/relaxed/lazy mode. One such behavior is that it disallows the automatic/implicit global variable creation. In that case, there would be no global Scope'd variable to hand back from an LHS look-up, and Engine would throw a ReferenceError similarly to the RHS case.
+
+ReferenceError is Scope resolution-failure related, whereas TypeError implies that Scope resolution was successful, but that there was an illegal/impossible action attempted against the result.
+
+Chapter 2 - Lexical Scope
+
 
 
