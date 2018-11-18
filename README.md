@@ -207,6 +207,35 @@ Both function scope and block scope behave by the same rules in this regard: any
 
 But there's a subtle detail of how scope attachment works with declarations that appear in various locations within a scope, and that detail is what we will examine here.
 
+the Engine actually will compile your JavaScript code before it interprets it. Part of the compilation phase was to find and associate all declarations with their appropriate scopes. 
+
+When you see var a = 2;, you probably think of that as one statement. But JavaScript actually thinks of it as two statements: var a; and a = 2;. The first statement, the declaration, is processed during the compilation phase. The second statement, the assignment, is left in place for the execution phase.
+
+So, one way of thinking, sort of metaphorically, about this process, is that variable and function declarations are "moved" from where they appear in the flow of the code to the top of the code. This gives rise to the name "Hoisting".
+
+ hoisting is per-scope. 
+ 
+ Function declarations are hoisted. But function expressions are not.
+ 
+ foo();
+
+function foo() {
+	console.log( a ); // undefined
+
+	var a = 2;
+}
+
+Leads to....
+
+foo(); // not ReferenceError, but TypeError!
+
+Both function declarations and variable declarations are hoisted. But a subtle detail (that can show up in code with multiple "duplicate" declarations) is that functions are hoisted first, and then variables.
+
+While multiple/duplicate var declarations are effectively ignored, subsequent function declarations do override previous ones.
+
+Chapter 5 - Scope closures
+
+ 
 
 
 
