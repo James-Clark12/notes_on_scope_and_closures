@@ -1,0 +1,1 @@
+# notes_on_scope_and_closures
