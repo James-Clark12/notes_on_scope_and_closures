@@ -139,7 +139,74 @@ By contrast, if the Engine is performing an LHS look-up and arrives at the top f
 
 ReferenceError is Scope resolution-failure related, whereas TypeError implies that Scope resolution was successful, but that there was an illegal/impossible action attempted against the result.
 
-Chapter 2 - Lexical Scope
+Chapter 2 - Lexical Scope - (lexical definition - relating to the words or vocabulary of a language
+
+Not sure why this is a different chapter - just the same as the previous one. Simply outlines how variables first access their closest scope before going beyond them.
+
+Lexical scope is deifned at the Lexical/ Tokenizing state of compilation. 
+
+scope consists of a series of "bubbles" that each act as a container or bucket, in which identifiers (variables, functions) are declared. These bubbles nest neatly inside each other, and this nesting is defined at author-time
+
+No matter where a function is invoked from, or even how it is invoked, its lexical scope is only defined by where the function was declared.
+
+Chapter 3 - Function vs. Block Scopre
+
+"Principle of Least Privilege" [^note-leastprivilege], also sometimes called "Least Authority" or "Least Exposure". This principle states that in the design of software, such as the API for a module/object, you should expose only what is minimally necessary, and "hide" everything else.
+
+It can be a good idea to wrap code in a function to insulate its scope.
+
+However the function name itself still polutes the scope/ namespace and the function must be manually executed in the exterior scope.
+
+TO answer the second issue there is the IIFE pattern:
+
+var a = 2;
+
+(function foo(){
+
+	var a = 3;
+	console.log( a ); // 3
+
+})();
+
+console.log( a ); // 2
+
+It allows a function to be executed immediately.
+
+As to the first issue ES6 introduced block scope for let and const.
+
+The let keyword attaches the variable declaration to the scope of whatever block (commonly a { .. } pair) it's contained in. In other words, let implicitly hijacks any block's scope for its variable declaration.
+
+declarations made with let will not hoist to the entire scope of the block they appear in. Such declarations will not observably "exist" in the block until the declaration statement.
+
+
+Declaring explicit blocks for variables to locally bind to is a powerful tool that you can add to your code toolbox.
+
+let Loops
+A particular case where let shines is in the for-loop case as we discussed previously.
+
+for (let i=0; i<10; i++) {
+	console.log( i );
+}
+
+console.log( i ); // ReferenceError
+Not only does let in the for-loop header bind the i to the for-loop body, but in fact, it re-binds it to each iteration of the loop, making sure to re-assign it the value from the end of the previous loop iteration.
+
+Here's another way of illustrating the per-iteration binding behavior that occurs:
+
+{
+	let j;
+	for (j=0; j<10; j++) {
+		let i = j; // re-bound for each iteration!
+		console.log( i );
+	}
+}
+
+Chapter 4 - Hoisting
+
+Both function scope and block scope behave by the same rules in this regard: any variable declared within a scope is attached to that scope.
+
+But there's a subtle detail of how scope attachment works with declarations that appear in various locations within a scope, and that detail is what we will examine here.
+
 
 
 
