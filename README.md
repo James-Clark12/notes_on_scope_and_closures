@@ -233,7 +233,18 @@ Both function declarations and variable declarations are hoisted. But a subtle d
 
 While multiple/duplicate var declarations are effectively ignored, subsequent function declarations do override previous ones.
 
-Chapter 5 - Scope closures
+Chapter 5 - Scope closure
+
+Closure is when a function is able to remember and access its lexical scope even when that function is executing outside its lexical scope.
+
+As far as I can tell what this means is that regardless of where a function is called (or reassigned and then called) it will use the scope it had at declaration time.
+
+Closures can trip us up, for instance with loops, if we're not careful to recognize them and how they work. But they are also an immensely powerful tool, enabling patterns like modules in their various forms.
+
+Modules require two key characteristics: 1) an outer wrapping function being invoked, to create the enclosing scope 2) the return value of the wrapping function must include reference to at least one inner function that then has closure over the private inner scope of the wrapper.
+
+
+
 
  
 
